@@ -35,7 +35,19 @@ If you are using the souce code, you should update the path of the Tesseract OCR
 ## Additional Information
 
 I have used Tesseract OCR for image recognition. If you want, you can train a custom Tensorflow Model and import it for character recognition. The `predict_2.py` file is one such model. I have not used it since the recognition speed is low. But it has a higher accuracy.
+
 The model requires the `model2.ckpt` file to work.
+For generating the `model2.ckpt` file, run the training script `create_model_2.py` by using the command
+
+    python create_model_2.py
+
+But first, take the following files:
+
+    t10k-images-idx3-ubyte.gz
+    t10k-labels-idx1-ubyte.gz
+    train-images-idx3-ubyte.gz
+    train-labels-idx1-ubyte.gz
+and put them into a folder called `MNIST_data` and then run the script. Else, you can change the path of the files in the `create_model_2.py`
 
 ## Credits
 This project was developed by Rochana HM.
