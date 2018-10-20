@@ -4,8 +4,19 @@
 # This was originally developed by Rochan
 # *****************************************
 # *****************************************
+# ------------------------------------------
+
 
 ######################## SUDOKU SOLVER ########################
+
+
+# To display our message, we use tkinter
+import tkinter.messagebox
+# To display at the starting.
+# Pygame may take time to initialize
+root = tkinter.Tk().withdraw()
+tkinter.messagebox.showinfo("Starting", "Please wait as we get everything ready...")
+
 
 # ----------IMPORTS----------
 
@@ -17,8 +28,6 @@ import numpy as np
 import pytesseract
 # Inbuilt module - time for making waiting (delay)
 import time
-# To display our message, we use tkinter
-import tkinter.messagebox
 # Pygame will be used for making GUI for our application
 import pygame
 # This is a neural net for character recognition based on Tensorflow's MNIST Dataset
@@ -157,8 +166,8 @@ def solve_sudoku(arr):
     global counter
     counter += 1
 
-    if counter > 1000:
-        # print("Ret false", counter)
+    if counter > 200000:
+        # print("ret falseeee", counter)
         return False
 
     # If there is no unassigned location, we are done
@@ -373,34 +382,35 @@ def run():
             # You can remove the print statement in case you don't want it
             if "1" in text:
                 Game_board[x][y] = 1
-                # print(1, end=" ")
+                print(1, end=" ")
             elif "2" in text:
                 Game_board[x][y] = 2
-                # print(2, end=" ")
+                print(2, end=" ")
             elif "3" in text:
                 Game_board[x][y] = 3
-                # print(3, end=" ")
+                print(3, end=" ")
             elif "4" in text:
                 Game_board[x][y] = 4
-                # print(4, end=" ")
+                print(4, end=" ")
             elif "5" in text:
                 Game_board[x][y] = 5
-                # print(5, end=" ")
+                print(5, end=" ")
             elif "6" in text:
                 Game_board[x][y] = 6
-                # print(6, end=" ")
+                print(6, end=" ")
             elif "7" in text:
                 Game_board[x][y] = 7
-                # print(7, end=" ")
+                print(7, end=" ")
             elif "8" in text:
                 Game_board[x][y] = 8
-                # print(8, end=" ")
+                print(8, end=" ")
             elif "9" in text:
                 Game_board[x][y] = 9
-                # print(9, end=" ")
+                print(9, end=" ")
             else:
                 Game_board[x][y] = 0
-                # print(0, end=" ")
+                print(0, end=" ")
+        print()
 
     # I am displaying the whole 2D Array
     # print("\n", Game_board)
@@ -452,18 +462,16 @@ def run():
     root = tkinter.Tk().withdraw()
     tkinter.messagebox.showinfo("Solving...", "The OCR is done.\nTrying to solve the Sudoku now...")
 
-    # Making another copy of the board, for future use
-    Copy_board = Game_board
 
     # Now, I am checking whether the Sudoku is solvable
     # If it is solvable, I will print it is solved and work on rendering the pygame Sudoku Grif
     # Else, I will work on rendering the sorry page
     if solve_sudoku(Game_board):
-        # print("Solved... Displaying")
+        print("Solved... Displaying")
         # This main is a reference to the function which will render the result
-        main(Game_board, Copy_board)
+        main(Game_board)
     else:
-        # print("Cant solve")
+        print("Cant solve")
         # This is a reference to the sorry function, which will be displayed in case it is not solvable
         sorry()
 
@@ -530,7 +538,7 @@ def sorry():
 
 
 # Main function which will display the solved sudoku
-def main(sudoku, copy):
+def main(sudoku):
 
     # Initialise pygame again
     pygame.init()
@@ -562,29 +570,30 @@ def main(sudoku, copy):
     for y in range(0, windowHeight, squareSize):
         pygame.draw.line(gameDisplay, black, (0, y), (windowWidth, y))
 
-    # Main loop to display
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                # quit()
-        # display(sudoku)
-        xnow = 5
-        ynow = -15
-        for x in range(0, 9):
-            for y in range(0, 9):
-                if copy[x][y] == sudoku[x][y]:
-                    txt = numberFont.render(str(sudoku[x][y]), True, red)
-                else:
-                    txt = numberFont.render(str(sudoku[x][y]), True, black)
+    # I put it in a try catch to handle any errors
+	try:
+		# Main loop to display
+		while True:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					# quit()
+			# display(sudoku)
+			xnow = 5
+			ynow = -15
+			for x in range(0, 9):
+				for y in range(0, 9):
+					txt = numberFont.render(str(sudoku[x][y]), True, red)
 
-                gameDisplay.blit(txt, (xnow, ynow))
-                xnow += 45
-                # print(xnow, ynow)
-            ynow += 45
-            xnow = 5
-            pygame.display.update()
-        pygame.display.update()
+					gameDisplay.blit(txt, (xnow, ynow))
+					xnow += 45
+					# print(xnow, ynow)
+				ynow += 45
+				xnow = 5
+				pygame.display.update()
+			pygame.display.update()
+	except:
+		pass
 
 
 # Function to display the initial screen
@@ -641,7 +650,7 @@ def init_scr():
                 pygame.quit()
                 # Display message
                 root = tkinter.Tk().withdraw()
-                tkinter.messagebox.showinfo("Opening", "Please wait. Opening your camera...")
+                tkinter.messagebox.showinfo("Opening...", "Please wait. Opening your camera...")
                 # Run the main sudoku part
                 run()
         else:
@@ -703,5 +712,5 @@ while True:
     pygame.display.update()
 
 # Finally, exit pygame and quit python
-pygame.quit()
-# quit()
+#pygame.quit()
+#quit()
