@@ -1,11 +1,15 @@
 # Sudoku Solver
 
 A simple Sudoku solver made in python 3.6
+
+
 **Note:** Try to keep the source, i.e the paper flat. Else, the OCR might not work.
 
 
 ## Running
 For simplicity, you can download the executable from the Google Drive link in `drive.txt`
+
+
 **NOTE:** This only works on Windows. For that, you need to have Tesseract Installed. **The application doesn't work without Tesseract**
 Install Tesseract at 
 
